@@ -9,13 +9,6 @@
 #import "ViewController.h"
 #import <Quartz/Quartz.h>
 
-typedef NS_ENUM(NSInteger, Ratio) {
-    Ratio3x5,
-    Ratio4x6,
-    Ratio5x7,
-    Ratio6x8
-};
-
 @implementation ViewController
 
 - (void)viewDidLoad {
@@ -32,7 +25,8 @@ typedef NS_ENUM(NSInteger, Ratio) {
 
 - (void)setupPopUpButton {
     [self.photoRatios removeAllItems];
-    [self.photoRatios addItemsWithTitles:@[@"3x5",@"4x6",@"5x7",@"6x8"]];
+//    [self.photoRatios addItemsWithTitles:@[@"3x5",@"4x6",@"5x7",@"6x8"]];
+    [self.photoRatios addItemsWithTitles:@[@"1",@"2",@"3",@"4",@"5"]];
     [self.photoRatios selectItemAtIndex:0];
 }
 
@@ -75,7 +69,7 @@ typedef NS_ENUM(NSInteger, Ratio) {
     // Initializations of variables
     BOOL cropSuccess = false;
     CGRect cropArea = CGRectZero;
-    int totalNumOfCrops = [self totalNumberOfCropsByRatio];
+    int totalNumOfCrops = (int) self.photoRatios.indexOfSelectedItem;
     
     for (int i=0; i<totalNumOfCrops; i++) {
         cropArea = [self calculateCropPhotoArea:cropArea withIndex:i];
@@ -118,9 +112,31 @@ typedef NS_ENUM(NSInteger, Ratio) {
     CGRect cropArea = CGRectZero;
     
     switch (self.photoRatios.indexOfSelectedItem) {
-        case Ratio3x5: {
+        case 1: {
+            // No need for next crop area since total number of crop(s) is 1.
+            // 6x8 ratio gets cropped initially from the HP Easy Scan program,
+            // thus no need for extra buffers.
+            width = 3600. - buffer*2;
+            height = 4800.;
+            cropArea = CGRectMake(0, 0, width, height);
         } break;
-        case Ratio4x6: {
+        case 2: {
+            switch (index) {
+                case 0: {
+                    width = 4197. - buffer*2;
+                    height = 2985. - buffer*2;
+                    cropArea = CGRectMake(buffer, buffer, width, height);
+                } break;
+                case 1: {
+                    // Make new crop area, make sure y-axis is transitioned down image's height + 3*buffer
+                    // (3*buffer because two for the previous cropped area + one for the newly adjusted y position)
+                    cropArea = CGRectMake(buffer, buffer*3 + height, width, height);
+                } break;
+                default:
+                    break;
+            }
+        } break;
+        case 3: {
             switch (index) {
                 case 0: {
                     // W&H is based on the SCANNED image, not the ACTUAL image
@@ -139,58 +155,17 @@ typedef NS_ENUM(NSInteger, Ratio) {
                     break;
             }
         } break;
-        case Ratio5x7: {
-            switch (index) {
-                case 0: {
-                    width = 4197. - buffer*2;
-                    height = 2985. - buffer*2;
-                    cropArea = CGRectMake(buffer, buffer, width, height);
-                } break;
-                case 1: {
-                    // Make new crop area, make sure y-axis is transitioned down image's height + 3*buffer
-                    // (3*buffer because two for the previous cropped area + one for the newly adjusted y position)
-                    cropArea = CGRectMake(buffer, buffer*3 + height, width, height);
-                } break;
-                default:
-                    break;
-            }
+        case 4: {
+        
         } break;
-        case Ratio6x8: {
-            // No need for next crop area since total number of crop(s) is 1.
-            // 6x8 ratio gets cropped initially from the HP Easy Scan program,
-            // thus no need for extra buffers.
-            width = 3600. - buffer*2;
-            height = 4800.;
-            cropArea = CGRectMake(0, 0, width, height);
+        case 5: {
+            
         } break;
         default:
             break;
     }
     
     return cropArea;
-}
-
-- (int)totalNumberOfCropsByRatio {
-    int totalNumOfCrops = 0;
-    
-    switch (self.photoRatios.indexOfSelectedItem) {
-        case Ratio3x5: {
-            totalNumOfCrops = 5;
-        } break;
-        case Ratio4x6: {
-            totalNumOfCrops = 3;
-        } break;
-        case Ratio5x7: {
-            totalNumOfCrops = 2;
-        } break;
-        case Ratio6x8: {
-            totalNumOfCrops = 1;
-        } break;
-        default:
-            break;
-    }
-    
-    return totalNumOfCrops;
 }
 
 @end
