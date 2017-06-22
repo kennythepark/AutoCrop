@@ -687,7 +687,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="346"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <box title="Metrics" translatesAutoresizingMaskIntoConstraints="NO" id="7pe-Wp-0P8">
+                            <box title="Metrics of Individual Image" translatesAutoresizingMaskIntoConstraints="NO" id="7pe-Wp-0P8">
                                 <rect key="frame" x="17" y="16" width="176" height="164"/>
                                 <view key="contentView" id="Jxt-VA-ml5">
                                     <rect key="frame" x="2" y="2" width="172" height="147"/>
@@ -745,6 +745,24 @@
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="deC-VD-DTM">
+                                            <rect key="frame" x="52" y="105" width="104" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Width (cm)" drawsBackground="YES" id="Szh-CA-X2F">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6cT-8T-uCf">
+                                            <rect key="frame" x="52" y="106" width="104" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Width (cm)" drawsBackground="YES" id="vkd-H8-uw0">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                     </subviews>
@@ -822,8 +840,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dpiLabel" destination="z7i-9N-kP3" id="0hF-JO-XNP"/>
+                        <outlet property="heightLabel" destination="P85-7O-pIT" id="hex-md-8Ey"/>
                         <outlet property="photoRatios" destination="slQ-yd-DKW" id="Ilk-I0-Xbs"/>
                         <outlet property="statusLabel" destination="9av-Rl-wuY" id="AcN-DY-6yi"/>
+                        <outlet property="widthLabel" destination="6cT-8T-uCf" id="s9O-8N-KOa"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

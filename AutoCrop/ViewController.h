@@ -8,14 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ViewController : NSViewController
+@interface ViewController : NSViewController <NSTextFieldDelegate>
 
 @property (weak) IBOutlet NSPopUpButtonCell *photoRatios;
 @property (weak) IBOutlet NSTextField *statusLabel;
-@property (strong) NSImage *selectedPhoto; // deprecate it please
 @property (strong, nonatomic) NSArray *photos;
+@property (weak) IBOutlet NSTextField *widthLabel;
+@property (weak) IBOutlet NSTextField *heightLabel;
+@property (weak) IBOutlet NSTextField *dpiLabel;
 
 @property int referenceNum;
+@property CGFloat width;
+@property CGFloat height;
+@property int dpiNum;
 
 @end
 

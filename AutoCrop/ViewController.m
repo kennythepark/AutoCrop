@@ -9,14 +9,20 @@
 #import "ViewController.h"
 #import <Quartz/Quartz.h>
 
-@implementation ViewController
+@implementation ViewController 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupPopUpButton];
     
-    self.statusLabel.stringValue = @"Welcome, start by selecting a photo!";
-    self.referenceNum = 2;
+    self.statusLabel.stringValue = @"Welcome, start by filling in the metrics. Then, select a photo!";
+    self.referenceNum = 1000;
+    self.width = 0.;
+    self.height = 0.;
+    self.dpiNum = 600; // Default DPI
+    
+    [self.widthLabel setDelegate:self];
+    [self.heightLabel setDelegate:self];
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -25,10 +31,23 @@
 
 - (void)setupPopUpButton {
     [self.photoRatios removeAllItems];
-//    [self.photoRatios addItemsWithTitles:@[@"3x5",@"4x6",@"5x7",@"6x8"]];
     [self.photoRatios addItemsWithTitles:@[@"1",@"2",@"3",@"4",@"5"]];
     [self.photoRatios selectItemAtIndex:0];
 }
+
+- (void)controlTextDidChange:(NSNotification *)obj {
+    NSTextField *textField = [obj object];
+    
+    if (textField == self.widthLabel) {
+        self.width = [textField doubleValue];
+    } else if (textField == self.heightLabel) {
+        self.height = [textField doubleValue];
+    } else if (textField == self.dpiLabel) {
+        self.dpiNum = [textField intValue];
+    }
+}
+
+#pragma mark - Select Photo
 
 - (IBAction)selectPhoto:(id)sender {
     NSOpenPanel *panel = [NSOpenPanel openPanel];
@@ -69,7 +88,7 @@
     // Initializations of variables
     BOOL cropSuccess = false;
     CGRect cropArea = CGRectZero;
-    int totalNumOfCrops = (int) self.photoRatios.indexOfSelectedItem;
+    int totalNumOfCrops = (int) self.photoRatios.indexOfSelectedItem + 1;
     
     for (int i=0; i<totalNumOfCrops; i++) {
         cropArea = [self calculateCropPhotoArea:cropArea withIndex:i];
@@ -112,7 +131,7 @@
     CGRect cropArea = CGRectZero;
     
     switch (self.photoRatios.indexOfSelectedItem) {
-        case 1: {
+        case 0: {
             // No need for next crop area since total number of crop(s) is 1.
             // 6x8 ratio gets cropped initially from the HP Easy Scan program,
             // thus no need for extra buffers.
@@ -120,7 +139,7 @@
             height = 4800.;
             cropArea = CGRectMake(0, 0, width, height);
         } break;
-        case 2: {
+        case 1: {
             switch (index) {
                 case 0: {
                     width = 4197. - buffer*2;
@@ -136,7 +155,7 @@
                     break;
             }
         } break;
-        case 3: {
+        case 2: {
             switch (index) {
                 case 0: {
                     // W&H is based on the SCANNED image, not the ACTUAL image
@@ -155,10 +174,10 @@
                     break;
             }
         } break;
-        case 4: {
+        case 3: {
         
         } break;
-        case 5: {
+        case 4: {
             
         } break;
         default:
@@ -166,6 +185,12 @@
     }
     
     return cropArea;
+}
+
+#pragma mark - Helper Methods
+
+- (CGFloat)calculatePixelsFromCentimeters:(CGFloat)cm {
+    return cm * self.dpiNum / 2.54; // 2.54 centimeters per inch
 }
 
 @end
