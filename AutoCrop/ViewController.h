@@ -18,6 +18,8 @@
 @property (weak) IBOutlet NSTextField *dpiLabel;
 
 @property int referenceNum;
+
+// W&H is based on the SCANNED image, not the ACTUAL image
 @property CGFloat width;
 @property CGFloat height;
 @property int dpiNum;

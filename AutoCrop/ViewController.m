@@ -9,7 +9,11 @@
 #import "ViewController.h"
 #import <Quartz/Quartz.h>
 
-@implementation ViewController 
+typedef NS_ENUM(NSInteger, StatusMsg) {
+    WelcomeMsg
+};
+
+@implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -124,64 +128,77 @@
 }
 
 - (CGRect)calculateCropPhotoArea:(CGRect)previousArea withIndex:(int)index {
-    CGFloat width = previousArea.size.width;
-    CGFloat height = previousArea.size.height;
+    // Default buffers
     CGFloat buffer = 15.;
+    CGFloat spaceBtwPhoto = 10.;
+    CGFloat b3 = buffer*3 + spaceBtwPhoto;
+    CGFloat b5 = buffer*5 + spaceBtwPhoto*2;
     
-    CGRect cropArea = CGRectZero;
+    // W&H is based on the SCANNED image, not the ACTUAL image
+    CGFloat wh = [self calculatePixelsFromCentimeters:self.width] - buffer*2;
+    CGFloat ht = [self calculatePixelsFromCentimeters:self.height] - buffer*2;
     
-    switch (self.photoRatios.indexOfSelectedItem) {
-        case 0: {
-            // No need for next crop area since total number of crop(s) is 1.
-            // 6x8 ratio gets cropped initially from the HP Easy Scan program,
-            // thus no need for extra buffers.
-            width = 3600. - buffer*2;
-            height = 4800.;
-            cropArea = CGRectMake(0, 0, width, height);
-        } break;
-        case 1: {
-            switch (index) {
-                case 0: {
-                    width = 4197. - buffer*2;
-                    height = 2985. - buffer*2;
-                    cropArea = CGRectMake(buffer, buffer, width, height);
-                } break;
-                case 1: {
+    // Default cropArea for all initial-index cases.
+    CGRect cropArea = CGRectMake(buffer, buffer, wh, ht);
+    
+    if (self.photoRatios.indexOfSelectedItem != 0 && index != 0) {
+        switch (self.photoRatios.indexOfSelectedItem) {
+            case 1: {
+                if (index == 1) {
                     // Make new crop area, make sure y-axis is transitioned down image's height + 3*buffer
                     // (3*buffer because two for the previous cropped area + one for the newly adjusted y position)
-                    cropArea = CGRectMake(buffer, buffer*3 + height, width, height);
-                } break;
-                default:
-                    break;
-            }
-        } break;
-        case 2: {
-            switch (index) {
-                case 0: {
-                    // W&H is based on the SCANNED image, not the ACTUAL image
-                    width = 2440. - buffer*2;
-                    height = 3573. - buffer*2;
-                    cropArea = CGRectMake(buffer, buffer, width, height);
-                } break;
-                case 1: {
-                    cropArea = CGRectMake(buffer*3 + width, buffer, width, height);
-                } break;
-                case 2: {
-                    // For this case, the width and height are reversed.
-                    cropArea = CGRectMake(buffer, buffer*3 + height, height, width);
-                } break;
-                default:
-                    break;
-            }
-        } break;
-        case 3: {
-        
-        } break;
-        case 4: {
-            
-        } break;
-        default:
-            break;
+                    cropArea = CGRectMake(buffer, b3 + ht, wh, ht);
+                }
+            }   break;
+            case 2: {
+                switch (index) {
+                    case 1: {
+                        cropArea = CGRectMake(b3 + wh, buffer, wh, ht);
+                    }   break;
+                    case 2: {
+                        // For this case, the width and height are reversed.
+                        cropArea = CGRectMake(buffer, b3 + ht, ht, wh);
+                    }   break;
+                    default:
+                        break;
+                }
+            }   break;
+            case 3: {
+                switch (index) {
+                    case 1: {
+                        cropArea = CGRectMake(b3 + wh, buffer, wh, ht);
+                    }   break;
+                    case 2: {
+                        cropArea = CGRectMake(buffer, b3 + ht, wh, ht);
+                    }   break;
+                    case 3: {
+                        cropArea = CGRectMake(b3 + wh, b3 + ht, wh, ht);
+                    }   break;
+                    default:
+                        break;
+                }
+            }   break;
+            case 4: {
+                switch (index) {
+                    case 1: {
+                        cropArea = CGRectMake(buffer, b3 + ht, wh, ht);
+                    }   break;
+                    case 2: {
+                        cropArea = CGRectMake(buffer, b5 + ht, wh, ht);
+                    }   break;
+                    case 3: {
+                        cropArea = CGRectMake(b3 + wh, buffer, ht, wh);
+                    }   break;
+                    case 4: {
+                        cropArea = CGRectMake(b3 + wh, b3 + wh, ht, wh);
+                    }   break;
+                    default:
+                        break;
+                }
+            }   break;
+            default:
+                break;
+        }
     }
     
     return cropArea;

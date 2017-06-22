@@ -687,7 +687,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="346"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <box title="Metrics of Individual Image" translatesAutoresizingMaskIntoConstraints="NO" id="7pe-Wp-0P8">
+                            <box title="Metrics of Img in the Scan" translatesAutoresizingMaskIntoConstraints="NO" id="7pe-Wp-0P8">
                                 <rect key="frame" x="17" y="16" width="176" height="164"/>
                                 <view key="contentView" id="Jxt-VA-ml5">
                                     <rect key="frame" x="2" y="2" width="172" height="147"/>
@@ -750,7 +750,7 @@
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="deC-VD-DTM">
                                             <rect key="frame" x="52" y="105" width="104" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Width (cm)" drawsBackground="YES" id="Szh-CA-X2F">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Longer (cm)" drawsBackground="YES" id="Szh-CA-X2F">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
