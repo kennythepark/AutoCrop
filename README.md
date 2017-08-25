@@ -1,8 +1,8 @@
 # AutoCrop
 
-<img align="left" src="https://github.com/kennythepark/AutoCrop/blob/master/Screenshots/main.png" hspace="15" width="500px" style="float: left">
+<img align="left" src="https://github.com/kennythepark/AutoCrop/blob/master/Screenshots/main.png" hspace="15" width="480px" style="float: left">
 
-AutoCrop is a macOS app that takes the pain away of manually cropping everything scanned photo inside a single scan. 
+AutoCrop is a macOS app that takes the pain away of manually cropping every scanned photo inside a single scan. 
 
 ## Details 
 
