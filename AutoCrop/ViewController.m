@@ -29,6 +29,11 @@ typedef NS_ENUM(NSInteger, StatusMsg) {
     [self.heightLabel setDelegate:self];
 }
 
+- (void)viewDidAppear {
+    [super viewDidAppear];
+    [self.view.window setTitle:@"AutoCrop"];
+}
+
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
 }
@@ -184,7 +189,7 @@ typedef NS_ENUM(NSInteger, StatusMsg) {
                         cropArea = CGRectMake(buffer, b3 + ht, wh, ht);
                     }   break;
                     case 2: {
-                        cropArea = CGRectMake(buffer, b5 + ht, wh, ht);
+                        cropArea = CGRectMake(buffer, b5 + ht*2, wh, ht);
                     }   break;
                     case 3: {
                         cropArea = CGRectMake(b3 + wh, buffer, ht, wh);
